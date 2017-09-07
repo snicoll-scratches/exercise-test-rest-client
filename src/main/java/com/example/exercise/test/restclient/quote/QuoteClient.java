@@ -2,6 +2,7 @@ package com.example.exercise.test.restclient.quote;
 
 import java.net.URI;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -17,8 +18,13 @@ public class QuoteClient {
 
 	private final URI serviceURI;
 
+	@Autowired
 	public QuoteClient(RestTemplateBuilder restTemplateBuilder) {
-		this.restTemplate = restTemplateBuilder.build();
+		this(restTemplateBuilder.build());
+	}
+
+	QuoteClient(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
 		this.serviceURI = UriComponentsBuilder.fromUriString(
 				"http://gturnquist-quoters.cfapps.io/api/random").build().toUri();
 	}
